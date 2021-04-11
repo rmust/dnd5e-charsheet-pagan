@@ -17,8 +17,108 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.justify-text {
+  text-align: justify;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  opacity: 1;
+  animation-name: fadeIn;
+  animation-duration: .15s;
+}
+
+.loader .spinner {
+  width: 80px;
+  height: 80px;
+  background-image: url('./media/d20diceLoader.png');
+  background-size: cover;
+  animation: rotate 1s linear infinite;
+}
 
 .spells {
-  max-width: 512px;
+  position: relative; max-width: 512px;
   margin: auto;
+}
+
+.search-results {
+  display: flex;
+  flex-direction: column;
+
+  position: absolute;
+  width: 100%;
+  padding: 10px;
+
+  background-color: white;
+  border: 1px solid #eee;
+  border-top: none;
+}
+
+.spell-btn,
+.add-spell-btn {
+  margin-top: 3px;
+  /* padding: 3px; */
+  border: none;
+  background-color: transparent;
+
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.active-spell-btn {
+  background-color: #f1f1f1;
+}
+
+.spell-name-btn {
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+}
+
+.spell-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.square-btn {
+  width: 25px !important;
+  height: 25px !important;
+  margin: 4px;
+}
+
+.add-spell-btn:hover {
+  background-color: #f2f2f2;
+}
+
+.my-spells {
+  margin-top: 2px;
+}
+
+.spell-details {
+  border: solid 2px #eee;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.spell-details-group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 4px;
+  padding: 10px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0) }
+  to { transform: rotate(360deg) }
 }

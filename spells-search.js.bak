@@ -1,0 +1,69 @@
+import { useEffect, useState } from "react";
+
+const getSearchResults = (keyword, state, setState) => {
+  if (!keyword) return setState({ ...state, foundSpells: [] });
+
+  // implement worker and move there smart logic
+  const spells = state.fetchedSpells
+    .filter((spell) => spell.index.includes(keyword))
+    .slice(0, 5);
+
+  return setState({ ...state, foundSpells: [spells] });
+};
+
+const renderSearchResults = (state, setState) => (
+  <div className="search-results">
+    {state.foundSpells &&
+      state.foundSpells.map((spell) => (
+        <button
+          className="add-spell-btn"
+          key={`${spell.index}-search`}
+          onClick={setState({
+            ...state,
+            mySpells: [...state.mySpells, spell],
+          })}
+        >
+          {spell.name}
+        </button>
+      ))}
+  </div>
+);
+
+const renderMySpells = (state) => (
+  <div className="my-spells">
+    {state.mySpells &&
+      state.mySpells.map((spell) => (
+        <button className="add-spell-btn" key={`${spell.index}-my-spells`}>
+          {spell.name}
+        </button>
+      ))}
+  </div>
+);
+
+export const SpellsSearch = () => {
+  const [state, setState] = useState({
+    fetchedSpells: [],
+    foundSpells: [],
+    mySpells: [],
+  });
+
+  useEffect(() => {
+    fetch("https://www.dnd5eapi.co/api/spells")
+      .then((res) => res.json())
+      .then((data) => setState({ ...state, fetchedSpells: data.results }));
+  }, []);
+
+  return (
+    <div className="spells">
+      <h1>Spells</h1>
+      <input
+        className="form-input"
+        type="text"
+        placeholder="search for the spell"
+        onChange={(e) => getSearchResults(e.target.value, state, setState)}
+      />
+      {state.foundSpells ? renderSearchResults(state, setState) : null}
+      {state.mySpells ? renderMySpells(state, setState) : null}
+    </div>
+  );
+}
